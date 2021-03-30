@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ReportCM.Data.Model
+namespace BI_HIGH_RISE_DAILY.Data.Model
 {
     public class Zone
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BI_High.Data.Model
+namespace BI_HIGH_RISE_DAILY.Data.Model
 {
     public class Progress
     {

@@ -13,7 +13,7 @@ namespace BI_HIGH_RISE_DAILY
     {
         static void Main(string[] args)
         {
-            Program pg = new Program();
+            SEND_EMAIL send_mail = new SEND_EMAIL();
 
             DateTime dt_prev = DateTime.Now.AddMonths(-1);
             DateTime dt_now = DateTime.Now;
@@ -23,88 +23,40 @@ namespace BI_HIGH_RISE_DAILY
             //Set First Day of Month
             //dt_prev = new DateTime(dt_prev.Year, dt_prev.Month, 1);
             //dt_now = new DateTime(dt_now.Year, dt_now.Month, 1);
-
+            //string text = "excBIChange_Req: " + ex.Message.ToString();
+            //bool flgBIChange_Req = send_mail.SendtoEmail(text);
 
             #region change_req
-            try
-            {
-                var cls = new CHANGE_REQ();
-                cls.exc(dt_now);//
-            }
-            catch (Exception ex)
-            {
-                string text = "excBIChange_Req: " + ex.Message.ToString();
-                bool flgBIChange_Req = pg.SendtoEmail(text);
-            }
+
+            var CHANGE_REQ = new CHANGE_REQ();
+            CHANGE_REQ.exc(dt_now);
 
             #endregion
 
             #region GoodsRecieve
-            try
-            {
-                var cls = new GOOD_RECIEVE();
-                cls.exc(dt);//dt_now
-            }
-            catch (Exception ex)
-            {
-                string text = "excBIGoodsRecieve: " + ex.Message.ToString();
-                bool flgBIGoodsRecieve = pg.SendtoEmail(text);
-            }
 
+            var GOOD_RECIEVE = new GOOD_RECIEVE();
+            GOOD_RECIEVE.exc(dt);//dt_now
 
             #endregion
 
             #region Fix after transfer
-            try
-            {
-                var cls = new FIX_AFTER_TRANSFER();
-                cls.exc(dt);
-            }
-            catch (Exception ex)
-            {
-                string text = "excBIFix_after_Transfer: " + ex.Message.ToString();
-                bool flgBIFixaftertransfer = pg.SendtoEmail(text);
-            }
+
+            var FIX_AFTER_TRANSFER = new FIX_AFTER_TRANSFER();
+            FIX_AFTER_TRANSFER.exc(dt);
+
+            #endregion
+
+            #region Assessment_Contractor_Fix ประเมินผู้รับเหมา งานซ่อม
+
+            var ASSESSMENT_CONTRACTOR_FIX = new ASSESSMENT_CONTRACTOR_FIX();
+            ASSESSMENT_CONTRACTOR_FIX.exc(dt);
 
             #endregion
 
 
 
-
         }
-        public bool SendtoEmail(string strBody)
-        {
-            bool flg = false;
-            try
-            {
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com"; //for gmail host 
-                smtp.Port = 587;
 
-                smtp.Credentials = new NetworkCredential("system@supalai.com", "SPL@cm#1!");
-                smtp.EnableSsl = true;
-
-                MailMessage message = new MailMessage();
-                ///FromMailAddress
-                //message.From = new MailAddress("phattaramon.cha@supalai.com", "Mine");
-
-                message.From = new MailAddress("erp@supalai.com", "Supalai IT (BI High Rise)");
-                ///ToMailAddress
-                message.To.Add(new MailAddress("it@supalai.com"));
-                message.Subject = "Error : BI High Rise";
-                message.IsBodyHtml = true; //to make message body as html  
-                message.Body = strBody;
-
-                smtp.Send(message);
-                flg = true;
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-                Console.Write(ex.ToString());
-                flg = false;
-            }
-            return flg;
-        }
     }
 }

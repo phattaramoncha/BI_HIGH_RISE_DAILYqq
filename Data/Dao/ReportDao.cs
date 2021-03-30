@@ -1,7 +1,7 @@
-﻿using BI_High.Data.Model;
+﻿using BI_HIGH_RISE_DAILY.Data.CLS;
+using BI_HIGH_RISE_DAILY.Data.Model;
 using CJRPortal.App_Helpers;
 using Npgsql;
-using ReportCM.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,6 +13,7 @@ namespace ReportCM.Data.Dao
 {
     public class ReportDao : BaseDao
     {
+        SEND_EMAIL send_mail = new SEND_EMAIL();
 
         public List<GoodRecieve> GetGoodRecieve(DateTime dt_now)
         {
@@ -35,6 +36,97 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
+                string text = "GetGoodRecieve => spl_get_bi_high_rise_good_recieve: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void POST_HIGH_RISE_ASSESSMENT_CONTRACTOR_FIX(List<AssConFix> fix)
+        {
+            bool flg = false;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(CRMDB_CONNECTION))
+                {
+                    using (SqlCommand cmd = new SqlCommand("POST_HIGH_RISE_ASSESSMENT_CONTRACTOR_FIX", conn))
+                    {
+                        conn.Open();
+
+                        foreach (var item in fix)
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@proj_code", ((object)item.proj_code) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@proj_name", ((object)item.proj_name) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@closed_at", ((object)item.closed_at) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@months", ((object)item.months) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@years", ((object)item.years) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@fix_work_order_id", ((object)item.fix_work_order_id) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@fix_work_code", ((object)item.fix_work_code) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@fix_code", ((object)item.fix_code) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@contractor_code", ((object)item.contractor_code) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@contractor_name", ((object)item.contractor_name) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@types", ((object)item.types) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@quality", ((object)item.score_1) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_quality", ((object)item.grade_1) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@mandays", ((object)item.score_2) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_mandays", ((object)item.grade_2) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@personnel", ((object)item.score_3) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_personnel", ((object)item.grade_3) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@coordination", ((object)item.score_4) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_coordination", ((object)item.grade_4) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@management", ((object)item.score_5) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_management", ((object)item.grade_5) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@service", ((object)item.score_6) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_service", ((object)item.grade_6) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@safety_hygiene", ((object)item.score_7) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_safety_hygiene", ((object)item.grade_7) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@assessment", ((object)item.score_assessment) ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@g_assessment", ((object)item.grade_assessment) ?? DBNull.Value);
+
+                            int result = cmd.ExecuteNonQuery();
+
+                            // Check Error
+                            if (result < 0)
+                                Console.WriteLine("Error inserting data into Database!");
+                            else flg = true;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string text = "Stroed P. => POST_HIGH_RISE_ASSESSMENT_CONTRACTOR_FIX: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public List<AssConFix> GetAssConFix(object dt_now)
+        {
+            try
+            {
+                using (var conn = new NpgsqlConnection(DB_CONNECTION))
+                {
+                    conn.Open();
+                    using (var cmd = new NpgsqlCommand("spl_get_bi_high_rise_assessment_contractor_fix_v2", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("in_date", NpgsqlTypes.NpgsqlDbType.Date, dt_now);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            return SQLDataMapper.MapToCollection<AssConFix>(reader);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string text = "GetAssConFix => spl_get_bi_high_rise_assessment_contractor_fix_v2: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -87,6 +179,8 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
+                string text = "Stroed P. => POST_HIGH_RISE_FIX_AFTER_TRANSFER: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -141,6 +235,8 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
+                string text = "Stroed P. => POST_HIGH_RISE_CHANGE_REQ: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -159,7 +255,7 @@ namespace ReportCM.Data.Dao
                         foreach (var item in goodRecieves)
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.Clear();  
+                            cmd.Parameters.Clear();
                             cmd.Parameters.AddWithValue("@cat_code", ((object)item.cat_code) ?? DBNull.Value);
                             cmd.Parameters.AddWithValue("@sub_cat_code", ((object)item.sub_cat_code) ?? DBNull.Value);
                             cmd.Parameters.AddWithValue("@posting_date", ((object)item.posting_date) ?? DBNull.Value);
@@ -196,6 +292,8 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
+                string text = "Stroed P. => POST_HIGH_RISE_GOOD_RECIEVE: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -221,7 +319,10 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
+                string text = "GetChangeReq => spl_get_bi_change_req_high_rise: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
+
             }
         }
 
@@ -246,6 +347,8 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
+                string text = "GetFixAfterTransfer => spl_get_bi_high_rise_fix_after_transfer_v2: " + ex.Message.ToString();
+                send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
