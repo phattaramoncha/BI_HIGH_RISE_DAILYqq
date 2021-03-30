@@ -12,9 +12,7 @@ namespace BI_HIGH_RISE_DAILY
     class Program
     {
         static void Main(string[] args)
-        {
-            SEND_EMAIL send_mail = new SEND_EMAIL();
-
+        { 
             DateTime dt_prev = DateTime.Now.AddMonths(-1);
             DateTime dt_now = DateTime.Now;
 

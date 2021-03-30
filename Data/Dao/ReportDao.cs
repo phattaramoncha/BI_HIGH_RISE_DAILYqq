@@ -9,11 +9,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace ReportCM.Data.Dao
+namespace BI_HIGH_RISE_DAILY.Data.Dao
 {
     public class ReportDao : BaseDao
     {
-        SEND_EMAIL send_mail = new SEND_EMAIL();
+        SEND_EMAIL mail = new SEND_EMAIL();
 
         public List<GoodRecieve> GetGoodRecieve(DateTime dt_now)
         {
@@ -37,7 +37,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "GetGoodRecieve => spl_get_bi_high_rise_good_recieve: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -99,7 +99,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "Stored P. => POST_HIGH_RISE_ASSESSMENT_CONTRACTOR_FIX: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -126,7 +126,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "GetAssConFix => spl_get_bi_high_rise_assessment_contractor_fix_v2: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -180,7 +180,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "Stored P. => POST_HIGH_RISE_FIX_AFTER_TRANSFER: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -236,7 +236,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "Stored P. => POST_HIGH_RISE_CHANGE_REQ: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -293,7 +293,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "Stored P. => POST_HIGH_RISE_GOOD_RECIEVE: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
@@ -320,7 +320,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "GetChangeReq => spl_get_bi_change_req_high_rise: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
 
             }
@@ -348,7 +348,7 @@ namespace ReportCM.Data.Dao
             catch (Exception ex)
             {
                 string text = "GetFixAfterTransfer => spl_get_bi_high_rise_fix_after_transfer_v2: " + ex.Message.ToString();
-                send_mail.SendtoEmail(text);
+                mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
         }
