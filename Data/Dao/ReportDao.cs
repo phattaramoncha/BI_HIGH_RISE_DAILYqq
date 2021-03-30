@@ -98,7 +98,7 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
-                string text = "Stroed P. => POST_HIGH_RISE_ASSESSMENT_CONTRACTOR_FIX: " + ex.Message.ToString();
+                string text = "Stored P. => POST_HIGH_RISE_ASSESSMENT_CONTRACTOR_FIX: " + ex.Message.ToString();
                 send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
@@ -179,7 +179,7 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
-                string text = "Stroed P. => POST_HIGH_RISE_FIX_AFTER_TRANSFER: " + ex.Message.ToString();
+                string text = "Stored P. => POST_HIGH_RISE_FIX_AFTER_TRANSFER: " + ex.Message.ToString();
                 send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
@@ -235,7 +235,7 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
-                string text = "Stroed P. => POST_HIGH_RISE_CHANGE_REQ: " + ex.Message.ToString();
+                string text = "Stored P. => POST_HIGH_RISE_CHANGE_REQ: " + ex.Message.ToString();
                 send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
@@ -292,7 +292,7 @@ namespace ReportCM.Data.Dao
             }
             catch (Exception ex)
             {
-                string text = "Stroed P. => POST_HIGH_RISE_GOOD_RECIEVE: " + ex.Message.ToString();
+                string text = "Stored P. => POST_HIGH_RISE_GOOD_RECIEVE: " + ex.Message.ToString();
                 send_mail.SendtoEmail(text);
                 throw new Exception(ex.Message);
             }
