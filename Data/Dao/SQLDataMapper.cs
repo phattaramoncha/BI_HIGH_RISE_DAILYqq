@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Collections;
 using System.Reflection;
@@ -28,6 +26,7 @@ namespace CJRPortal.App_Helpers
                         newObject[reader.GetName(i).ToUpper()] = reader.GetValue(i);
                     }
                 }
+
                 items.Add(newObject);
             }
 
@@ -50,7 +49,7 @@ namespace CJRPortal.App_Helpers
                 T newObject = new T();
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    PropertyInfo prop = (PropertyInfo)propMap[reader.GetName(i).ToUpper()];
+                    PropertyInfo prop = (PropertyInfo) propMap[reader.GetName(i).ToUpper()];
                     if (prop != null && prop.CanWrite)
                     {
                         if (reader.IsDBNull(i))
@@ -63,6 +62,7 @@ namespace CJRPortal.App_Helpers
                         }
                     }
                 }
+
                 result = newObject;
             }
 
@@ -86,7 +86,7 @@ namespace CJRPortal.App_Helpers
                 T newObject = new T();
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    PropertyInfo prop = (PropertyInfo)propMap[reader.GetName(i).ToUpper()];
+                    PropertyInfo prop = (PropertyInfo) propMap[reader.GetName(i).ToUpper()];
                     if (prop != null && prop.CanWrite)
                     {
                         if (reader.IsDBNull(i))
@@ -99,6 +99,7 @@ namespace CJRPortal.App_Helpers
                         }
                     }
                 }
+
                 items.Add(newObject);
             }
 
@@ -139,7 +140,7 @@ namespace CJRPortal.App_Helpers
                 T newObject = new T();
                 for (int i = 0; i < reader.FieldCount; i++)
                 {
-                    PropertyInfo prop = (PropertyInfo)propMap[reader.GetName(i).ToUpper()];
+                    PropertyInfo prop = (PropertyInfo) propMap[reader.GetName(i).ToUpper()];
                     if (prop != null && prop.CanWrite)
                     {
                         if (reader.IsDBNull(i))
@@ -152,6 +153,7 @@ namespace CJRPortal.App_Helpers
                         }
                     }
                 }
+
                 items.Add(newObject);
             }
 
